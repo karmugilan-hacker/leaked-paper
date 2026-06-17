@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leak Paper</title>
+
+<style>
+body{
+    margin:0;
+    background:black;
+    overflow:hidden;
+    font-family:Arial,sans-serif;
+}
+canvas{
+    position:fixed;
+    top:0;
+    left:0;
+}
+.login{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    width:350px;
+    padding:30px;
+    text-align:center;
+    border:2px solid #00ff55;
+    border-radius:15px;
+    box-shadow:0 0 20px #00ff55;
+    background:rgba(0,0,0,.8);
+}
+h1{
+    color:#00ff55;
+    text-shadow:0 0 10px #00ff55;
+}
+input{
+    width:90%;
+    padding:10px;
+    margin:20px 0;
+    background:black;
+    border:1px solid #00ff55;
+    color:#00ff55;
+}
+button{
+    width:95%;
+    padding:12px;
+    background:#00ff55;
+    border:none;
+    font-weight:bold;
+    cursor:pointer;
+}
+#msg{
+    margin-top:20px;
+    color:red;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="matrix"></canvas>
+
+<div class="login">
+<h1>LEAK PAPER</h1>
+<p style="color:white;">ENTER PASSWORD</p>
+
+<input type="password" id="pass">
+<button onclick="check()">ENTER</button>
+
+<h2 id="msg"></h2>
+</div>
+
+<script>
+function check(){
+let pass=document.getElementById("pass").value;
+
+if(pass=="hack123"){
+document.getElementById("msg").style.color="lime";
+document.getElementById("msg").innerHTML="ACCESS GRANTED";
+}
+else{
+document.getElementById("msg").style.color="red";
+document.getElementById("msg").innerHTML="ACCESS DENIED";
+}
+}
+
+// Matrix Effect
+const canvas=document.getElementById("matrix");
+const ctx=canvas.getContext("2d");
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+const letters="ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*";
+const arr=letters.split("");
+
+const font=16;
+const columns=canvas.width/font;
+const drops=[];
+
+for(let i=0;i<columns;i++) drops[i]=1;
+
+function draw(){
+ctx.fillStyle="rgba(0,0,0,0.05)";
+ctx.fillRect(0,0,canvas.width,canvas.height);
+
+ctx.fillStyle="#00ff55";
+ctx.font=font+"px monospace";
+
+for(let i=0;i<drops.length;i++){
+let text=arr[Math.floor(Math.random()*arr.length)];
+ctx.fillText(text,i*font,drops[i]*font);
+
+if(drops[i]*font>canvas.height && Math.random()>0.975)
+drops[i]=0;
+
+drops[i]++;
+}
+}
+setInterval(draw,35);
+</script>
+
+</body>
+</html>

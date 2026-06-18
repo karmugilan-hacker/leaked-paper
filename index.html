@@ -83,9 +83,14 @@ document.body.addEventListener("click", () => {
 function check(){
 let pass=document.getElementById("pass").value;
 
-if(pass=="hack123"){
+if(pass=="manimaadu"){
 document.getElementById("msg").style.color="lime";
 document.getElementById("msg").innerHTML="ACCESS GRANTED";
+
+setTimeout(() => {
+    window.location.href = "gotcha.jpg";
+}, 1000);
+
 }
 else{
 document.getElementById("msg").style.color="red";
